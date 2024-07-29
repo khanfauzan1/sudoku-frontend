@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-const url =process.env.REACT_APP_URL
+// const url =process.env.REACT_APP_URL
 
 function SudokuGrid() {
   const [grid, setGrid] = useState(Array(9).fill().map(() => Array(9).fill(0)));
 
   const handleCellChange = (row, col, value) => {
-    const newGrid = [...grid];
-    newGrid[row][col] = value === '' ? 0 : parseInt(value, 10);
-    setGrid(newGrid);
+    const newValue = value === '' ? 0 : parseInt(value, 10);
+    if (newValue >= 0 && newValue <= 9) {
+      const newGrid = [...grid];
+      newGrid[row][col] = newValue;
+      setGrid(newGrid);
+    }
   };
 
   const handleSolve = async () => {
     try {
-      const response = await axios.post(url+'/api/solve', { puzzle: grid });
+      const response = await axios.post('http://localhost:5000/api/solve', { puzzle: grid });
       setGrid(response.data.solution);
     } catch (error) {
       console.error('Error solving Sudoku:', error);
