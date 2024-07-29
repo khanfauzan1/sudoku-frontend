@@ -16,7 +16,7 @@ function SudokuGrid() {
 
   const handleSolve = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/solve', { puzzle: grid });
+      const response = await axios.post('https://sudoku-backend-yc1b.onrender.com/api/solve', { puzzle: grid });
       setGrid(response.data.solution);
     } catch (error) {
       console.error('Error solving Sudoku:', error);
